@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Jost', system-ui, sans-serif;
+  --font-cursive: 'Pinyon Script', cursive;
+  --font-arabic: 'Amiri', serif;
+  --font-playfair: 'Playfair Display', serif;
+  --font-greatvibes: 'Great Vibes', cursive;
+  --font-allura: 'Allura', cursive;
+  --font-parisienne: 'Parisienne', cursive;
+
+  --color-gold-50: #FAF7F2;
+  --color-gold-100: #F3ECE1;
+  --color-gold-200: #E5DACB;
+  --color-gold-300: #D3C1AA;
+  --color-gold-400: #BA9974;
+  --color-gold-500: #A58057;
+  --color-gold-600: #8C6540;
+  --color-gold-700: #6D4B2D;
+  --color-gold-800: #54371F;
+  --color-gold-900: #382212;
+
+  /* Deep warm brown accent */
+  --color-olive-500: #6D4B2D;
+
+  /* Primary body copy tones in warm mocha/espresso */
+  --color-ink-700: #35251B;
+  --color-ink-500: #6E5647;
+
+  /* Warm terracotta / caramel tone for highlights */
+  --color-rose-600: #8C5940;
+
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
+  --animate-spin-slow: spin-slow 8s linear infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer base {
+  body {
+    background-color: #FAF7F2;
+    color: var(--color-ink-700);
+    font-family: var(--font-sans);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
