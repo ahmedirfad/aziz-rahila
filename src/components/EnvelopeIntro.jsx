@@ -25,7 +25,7 @@ export function EnvelopeIntro({ onOpen, onComplete, audioRef }) {
       const rustle = new Audio("/paper-rustle.mp3");
       rustle.volume = 0.5;
       rustle.play().catch((err) => console.log("Sound play prevented:", err));
-    } catch (e) {}
+    } catch (e) { }
 
     // Animate opening transition
     const tl = gsap.timeline({
@@ -104,12 +104,12 @@ export function EnvelopeIntro({ onOpen, onComplete, audioRef }) {
 
         {/* Subtitle */}
         <p className="font-sans text-[11px] sm:text-xs tracking-[0.35em] uppercase text-[#E8D7B8] font-semibold mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-          NIKKAH INVITATION
+          WEDDING INVITATION
         </p>
 
         {/* Couple Names in Elegant Calligraphy */}
         <h1 className="font-allura text-4xl sm:text-5xl text-[#FAF7F2] font-normal leading-tight mb-3 drop-shadow-[0_3px_15px_rgba(0,0,0,0.95)]">
-          Raahila <span className="font-serif italic text-2xl sm:text-3xl text-[#D3C1AA] mx-1">&amp;</span> Abdul Aziz
+          Aziz <span className="font-serif italic text-2xl sm:text-3xl text-[#D3C1AA] mx-1">&amp;</span> Raahila
         </h1>
 
         {/* Date */}
