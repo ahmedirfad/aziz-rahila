@@ -108,7 +108,7 @@ export function Gallery() {
             {weddingConfig.groomName} &amp; {weddingConfig.brideName}
           </p>
           <p className="font-sans text-[10px] uppercase tracking-widest text-gold-700 font-semibold">
-            {weddingConfig.invitation.dateDay} {weddingConfig.invitation.dateMonth} {weddingConfig.invitation.dateYear} • {weddingConfig.invitation.venueName}
+            The Wedding Stationery • {weddingConfig.invitation.venueName}
           </p>
         </div>
       </div>

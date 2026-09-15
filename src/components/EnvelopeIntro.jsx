@@ -108,14 +108,9 @@ export function EnvelopeIntro({ onOpen, onComplete, audioRef }) {
         </p>
 
         {/* Couple Names in Elegant Calligraphy */}
-        <h1 className="font-allura text-4xl sm:text-5xl text-[#FAF7F2] font-normal leading-tight mb-3 drop-shadow-[0_3px_15px_rgba(0,0,0,0.95)]">
+        <h1 className="font-allura text-4xl sm:text-5xl text-[#FAF7F2] font-normal leading-tight mb-8 drop-shadow-[0_3px_15px_rgba(0,0,0,0.95)]">
           Aziz <span className="font-serif italic text-2xl sm:text-3xl text-[#D3C1AA] mx-1">&amp;</span> Raahila
         </h1>
-
-        {/* Date */}
-        <p className="font-sans text-xs sm:text-sm tracking-[0.35em] text-[#E8D7B8] font-medium mb-12 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-          12 · 10 · 2026
-        </p>
 
         {/* Circular Wax Seal Envelope Button */}
         <div

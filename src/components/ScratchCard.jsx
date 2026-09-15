@@ -1,14 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Calendar, Clock, MapPin, Sparkles } from "lucide-react";
 import { useScratchCard } from "../hooks/useScratchCard";
 import { weddingConfig } from "../config";
 
-gsap.registerPlugin(ScrollTrigger);
-
-export function ScratchCard({ isNested = false }) {
-  const sectionRef = useRef(null);
+export function ScratchCard({ isHero = true }) {
   const cardRef = useRef(null);
   const canvasRef = useRef(null);
   const particleContainerRef = useRef(null);
@@ -29,68 +25,44 @@ export function ScratchCard({ isNested = false }) {
   };
 
   const { isScratched, scratchPercent, handlers } = useScratchCard(canvasRef, {
-    brushSize: isNested ? 15 : 22,
-    revealThreshold: 55,
+    brushSize: 22,
+    revealThreshold: 40,
+    theme: "dark",
     onRevealComplete: handleRevealComplete
   });
-
-  useEffect(() => {
-    if (isNested) return;
-
-    const anim = gsap.fromTo(
-      cardRef.current,
-      { opacity: 0, scale: 0.95 },
-      {
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 80%",
-          toggleActions: "play none none none"
-        }
-      }
-    );
-
-    return () => {
-      if (anim.scrollTrigger) anim.scrollTrigger.kill();
-      anim.kill();
-    };
-  }, [isNested]);
 
   const triggerFlowerBurst = () => {
     const container = particleContainerRef.current;
     if (!container) return;
 
-    const colors = ["#D1B46A", "#B8A369", "#8A6D27", "#F5F0E1", "#FCF9F2"];
-    const particleCount = 30;
+    const colors = ["#FAF7F2", "#E8D7B8", "#D3C1AA", "#BA9974", "#8C6540", "#FFE4C4"];
+    const particleCount = 35;
 
     for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement("div");
       particle.style.position = "absolute";
       particle.style.left = "50%";
       particle.style.top = "50%";
-      particle.style.width = `${gsap.utils.random(6, 12)}px`;
-      particle.style.height = `${gsap.utils.random(6, 12)}px`;
+      particle.style.width = `${gsap.utils.random(5, 11)}px`;
+      particle.style.height = `${gsap.utils.random(5, 11)}px`;
       particle.style.backgroundColor = gsap.utils.random(colors);
-      
+
       if (Math.random() > 0.5) {
         particle.style.borderRadius = "50% 0 50% 0";
       } else {
         particle.style.borderRadius = "50%";
       }
-      
+
       particle.style.transform = "translate(-50%, -50%)";
       container.appendChild(particle);
 
       gsap.to(particle, {
-        x: gsap.utils.random(-120, 120),
-        y: gsap.utils.random(-150, 80),
+        x: gsap.utils.random(-130, 130),
+        y: gsap.utils.random(-140, 90),
         rotation: gsap.utils.random(0, 360),
-        scale: gsap.utils.random(0.3, 1.2),
+        scale: gsap.utils.random(0.4, 1.3),
         opacity: 0,
-        duration: gsap.utils.random(1.0, 1.8),
+        duration: gsap.utils.random(1.1, 1.9),
         ease: "power2.out",
         onComplete: () => {
           particle.remove();
@@ -108,54 +80,50 @@ export function ScratchCard({ isNested = false }) {
     }
   };
 
-  const cardContent = (
+  const invite = weddingConfig.invitation;
+
+  return (
     <div
       ref={cardRef}
-      className={`relative w-full border border-gold-500/50 rounded-2xl bg-gold-100 shadow-xl overflow-hidden flex flex-col justify-center items-center ${
-        isNested ? "min-h-[135px] max-w-[240px] mx-auto" : "min-h-[260px]"
-      }`}
+      className="relative w-full max-w-[340px] mx-auto min-h-[145px] rounded-2xl bg-black/40 backdrop-blur-md border border-[#D3C1AA]/45 shadow-[0_10px_30px_rgba(0,0,0,0.55)] overflow-hidden flex flex-col justify-center items-center my-2 select-none"
     >
-      <div className="absolute top-1.5 left-1.5 right-1.5 bottom-1.5 border border-dashed border-gold-500/40 rounded-xl pointer-events-none" />
+      {/* Inner Decorative Dashed Border */}
+      <div className="absolute top-1.5 left-1.5 right-1.5 bottom-1.5 border border-dashed border-[#D3C1AA]/25 rounded-xl pointer-events-none" />
 
-      {/* Hidden Content */}
-      <div className={`w-full text-center flex flex-col items-center z-10 ${isNested ? "py-3 px-2" : "py-8 px-6"}`}>
-        <p className="font-sans text-[8px] sm:text-[11px] uppercase tracking-widest text-gold-600 mb-0.5">
-          And Celebration Of
-        </p>
-        <h2 className={`font-serif text-gold-700 font-medium mb-1 ${isNested ? "text-sm" : "text-3xl"}`}>
-          The Reception
-        </h2>
+      {/* Gold Corner L-Accents */}
+      <div className="absolute top-1 left-1 w-3 h-3 border-t-2 border-l-2 border-[#D3C1AA]/70 pointer-events-none" />
+      <div className="absolute top-1 right-1 w-3 h-3 border-t-2 border-r-2 border-[#D3C1AA]/70 pointer-events-none" />
+      <div className="absolute bottom-1 left-1 w-3 h-3 border-b-2 border-l-2 border-[#D3C1AA]/70 pointer-events-none" />
+      <div className="absolute bottom-1 right-1 w-3 h-3 border-b-2 border-r-2 border-[#D3C1AA]/70 pointer-events-none" />
 
-        <div className={`flex flex-col items-start mx-auto text-left ${isNested ? "gap-2 max-w-[210px]" : "gap-2.5 max-w-[240px]"}`}>
-          <div className="flex gap-2 items-center">
-            <Calendar size={isNested ? 11 : 13} className="text-gold-700 shrink-0" />
-            <p className={`${isNested ? "text-[10px]" : "text-xs"} text-[#3A3626] font-semibold`}>
-              {weddingConfig.receptionDateFormatted}
-            </p>
-          </div>
+      {/* Revealed Hidden Event Content */}
+      <div className="w-full text-center flex flex-col items-center z-10 py-3.5 px-4">
+        {/* Subtle Badge */}
+        <div className="flex items-center justify-center gap-1 text-[9px] uppercase tracking-[0.25em] text-[#E8D7B8] font-bold mb-1 drop-shadow-sm">
+          <Sparkles size={11} className="text-[#E8D7B8]" />
+          <span>Save The Date &amp; Venue</span>
+          <Sparkles size={11} className="text-[#E8D7B8]" />
+        </div>
 
-          <div className="flex gap-2 items-center">
-            <Clock size={isNested ? 11 : 14} className="text-gold-700 shrink-0" />
-            <p className={`${isNested ? "text-[10px]" : "text-xs"} text-[#3A3626]`}>
-              {weddingConfig.receptionTimeFormatted}
-            </p>
-          </div>
+        {/* Date in Bold Serif Gold/Cream */}
+        <div className="flex items-center justify-center gap-1.5 text-[#FAF7F2] text-sm sm:text-base font-serif font-bold drop-shadow-md">
+          <Calendar size={14} className="text-[#E8D7B8] shrink-0" />
+          <span>{invite.dateFormatted || "Monday, 12th October 2026"}</span>
+        </div>
 
-          <div className="flex gap-2 items-start">
-            <MapPin size={isNested ? 11 : 14} className="text-gold-700 mt-0.5 shrink-0" />
-            <div>
-              <p className={`${isNested ? "text-[10px]" : "text-xs"} text-[#3A3626] font-semibold leading-tight`}>
-                {weddingConfig.receptionVenue}
-              </p>
-              <p className={`${isNested ? "text-[9px]" : "text-[11px]"} text-[#666150] mt-0.5 leading-tight`}>
-                {weddingConfig.receptionAddress}
-              </p>
-            </div>
-          </div>
+        {/* Islamic Date & Nikah Timing */}
+        <div className="text-[11px] text-[#E8D7B8] font-sans drop-shadow-sm mt-0.5">
+          {invite.dateHijri} • Nikah at {invite.nikahTime}
+        </div>
+
+        {/* Reception & Venue */}
+        <div className="w-full max-w-[280px] flex items-center justify-center gap-1.5 text-[11px] text-[#FAF7F2]/95 font-medium pt-1.5 mt-1.5 border-t border-[#D3C1AA]/25 drop-shadow-sm">
+          <MapPin size={12} className="text-[#E8D7B8] shrink-0" />
+          <span className="truncate">{invite.venueFull || "Grand Auditorium Hosangadi"}</span>
         </div>
       </div>
 
-      {/* Canvas Overlay */}
+      {/* Canvas Overlay for Scratch Interaction */}
       {!isFullyRevealed && (
         <canvas
           ref={canvasRef}
@@ -166,28 +134,21 @@ export function ScratchCard({ isNested = false }) {
         />
       )}
 
-      {/* Scratch Prompt */}
+      {/* Floating Call-to-Action Badge */}
       {!hasStartedScratching && !isFullyRevealed && (
-        <div className="absolute z-30 pointer-events-none flex flex-col items-center gap-1">
-          <p className="text-gold-700 font-sans text-xs tracking-widest uppercase bg-gold-100 px-3.5 py-1.5 rounded-full border border-gold-500 shadow-md animate-pulse">
-            Scratch to Reveal
-          </p>
+        <div className="absolute z-30 pointer-events-none flex flex-col items-center gap-1 px-2">
+          <div className="flex items-center gap-1.5 bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#D3C1AA]/70 shadow-[0_4px_15px_rgba(0,0,0,0.7)] animate-pulse">
+            <Sparkles size={12} className="text-[#E8D7B8]" />
+            <span className="text-[#FAF7F2] font-sans text-[10px] sm:text-[11px] tracking-[0.2em] uppercase font-bold">
+              Scratch to Reveal Date
+            </span>
+          </div>
         </div>
       )}
 
       {/* Celebration burst container */}
       <div ref={particleContainerRef} className="absolute inset-0 w-full h-full pointer-events-none z-40" />
     </div>
-  );
-
-  if (isNested) {
-    return <div className="w-full mt-6">{cardContent}</div>;
-  }
-
-  return (
-    <section ref={sectionRef} className="py-12 px-6">
-      {cardContent}
-    </section>
   );
 }
 

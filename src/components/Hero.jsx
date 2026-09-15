@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Calendar, MapPin, Send } from "lucide-react";
+import { Calendar, Send } from "lucide-react";
 import { weddingConfig } from "../config";
 import heroBannerImg from "../assets/download (9).jpeg";
+import ScratchCard from "./ScratchCard";
 
 export function Hero({ isCurtainOpened }) {
   const containerRef = useRef(null);
@@ -103,22 +104,10 @@ export function Hero({ isCurtainOpened }) {
           <span className="block">{bride}</span>
         </h1>
 
-        <div className="w-16 h-px bg-[#D3C1AA]/50 my-3 shadow-sm" />
+        <div className="w-16 h-px bg-[#D3C1AA]/50 my-2.5 shadow-sm" />
 
-        {/* Translucent Frosted Glass Event Capsule */}
-        <div className="w-full bg-black/35 backdrop-blur-md rounded-2xl p-3.5 my-2 border border-[#D3C1AA]/35 shadow-[0_8px_25px_rgba(0,0,0,0.5)] flex flex-col gap-1.5 text-center">
-          <div className="flex items-center justify-center gap-1.5 text-[#FAF7F2] text-xs font-semibold drop-shadow-sm">
-            <Calendar size={13} className="text-[#E8D7B8]" />
-            <span>Monday, 12th October 2026</span>
-          </div>
-          <div className="text-[11px] text-[#E8D7B8] font-sans drop-shadow-sm">
-            Chand 1 Jumada al avval 1448 • Nikah at 11:00 AM
-          </div>
-          <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#FAF7F2]/90 font-medium pt-1 border-t border-[#D3C1AA]/20">
-            <MapPin size={12} className="text-[#E8D7B8]" />
-            <span>Grand Auditorium, Hosangadi</span>
-          </div>
-        </div>
+        {/* Interactive Scratch-off Wedding Date & Venue Card */}
+        <ScratchCard isHero={true} />
 
         {/* Translucent Action Buttons */}
         <div className="w-full grid grid-cols-2 gap-2.5 mt-3">

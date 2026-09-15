@@ -1,9 +1,8 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Phone, Clock, MapPin, Sparkles, Heart, Utensils, CheckCircle } from "lucide-react";
+import { Phone, Clock, MapPin, Utensils } from "lucide-react";
 import { weddingConfig } from "../config";
-import ScratchCard from "./ScratchCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -88,7 +87,7 @@ export function DetailsCard() {
         </div>
 
         {/* Vertical Timeline Journey */}
-        <div className="relative z-10 flex flex-col gap-4 text-left my-6">
+        <div className="relative z-10 flex flex-col gap-3.5 text-left my-6">
           {/* Step 1: Nikah */}
           <div className="relative flex items-start gap-4 p-4 rounded-2xl bg-[#F3ECE1]/60 border border-[#BA9974]/25 transition-all hover:bg-[#F3ECE1]">
             <div className="w-10 h-10 rounded-xl bg-[#54371F] text-[#FAF7F2] flex items-center justify-center shrink-0 shadow-sm mt-0.5">
@@ -99,7 +98,7 @@ export function DetailsCard() {
                 <span className="font-sans text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#BA9974]/20 text-[#54371F]">
                   11:00 AM
                 </span>
-                <span className="text-[11px] text-[#8C6540] font-medium">Monday, 12 Oct 2026</span>
+                <span className="text-[11px] text-[#8C6540] font-medium">Sacred Solemnization</span>
               </div>
               <h4 className="font-serif text-lg font-bold text-[#54371F] mt-1">
                 Sacred Nikah Ceremony
@@ -120,7 +119,7 @@ export function DetailsCard() {
                 <span className="font-sans text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md bg-[#BA9974]/20 text-[#54371F]">
                   After Nikah
                 </span>
-                <span className="text-[11px] text-[#8C6540] font-medium">12:00 PM Onwards</span>
+                <span className="text-[11px] text-[#8C6540] font-medium">Luncheon &amp; Celebrations</span>
               </div>
               <h4 className="font-serif text-lg font-bold text-[#54371F] mt-1">
                 Wedding Feast &amp; Reception
@@ -148,14 +147,6 @@ export function DetailsCard() {
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Interactive Scratch-off Feature */}
-        <div className="relative z-10 my-6">
-          <p className="font-sans text-[10px] tracking-[0.2em] uppercase text-[#8C6540] font-semibold mb-2">
-            Special Reception Note
-          </p>
-          <ScratchCard isNested={true} />
         </div>
 
         {/* Best Compliments */}

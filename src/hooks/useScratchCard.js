@@ -2,7 +2,8 @@ import { useEffect, useState, useRef } from "react";
 
 export function useScratchCard(canvasRef, {
   brushSize = 25,
-  revealThreshold = 55,
+  revealThreshold = 45,
+  theme = "dark",
   onRevealComplete = () => {}
 } = {}) {
   const [isScratched, setIsScratched] = useState(false);
@@ -20,29 +21,89 @@ export function useScratchCard(canvasRef, {
     // Set canvas internal resolution to match display size
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect();
-      // Only set size if it hasn't been set yet or if width/height changed significantly
-      if (canvas.width !== rect.width || canvas.height !== rect.height) {
-        // Save current contents if we are in the middle of scratching (optional, here we re-draw since it's initial)
-        canvas.width = rect.width;
-        canvas.height = rect.height;
+      if (rect.width === 0 || rect.height === 0) return;
+
+      if (canvas.width !== Math.round(rect.width) || canvas.height !== Math.round(rect.height)) {
+        canvas.width = Math.round(rect.width);
+        canvas.height = Math.round(rect.height);
         drawOverlay();
       }
     };
 
     const drawOverlay = () => {
-      // Clear
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Draw solid cream/beige overlay
-      ctx.fillStyle = "#F6EEDD"; 
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const width = canvas.width;
+      const height = canvas.height;
+      if (!width || !height) return;
 
-      // Draw a gold dotted border around the scratch area
-      ctx.strokeStyle = "rgba(184, 163, 105, 0.4)";
-      ctx.lineWidth = 2;
-      ctx.setLineDash([4, 4]);
-      ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-      ctx.setLineDash([]);
+      ctx.clearRect(0, 0, width, height);
+
+      if (theme === "dark") {
+        // Luxury Dark Metallic Bronze/Espresso Gradient matching the Hero floral background
+        const grad = ctx.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, "#26150D");
+        grad.addColorStop(0.35, "#3C2317");
+        grad.addColorStop(0.7, "#2D1910");
+        grad.addColorStop(1, "#1C0E08");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        // Subtle Gold Sparkle / Shimmer Specks
+        ctx.fillStyle = "rgba(232, 215, 184, 0.18)";
+        for (let i = 0; i < 28; i++) {
+          const sx = (Math.sin(i * 137.5) * 0.5 + 0.5) * width;
+          const sy = (Math.cos(i * 92.3) * 0.5 + 0.5) * height;
+          ctx.beginPath();
+          ctx.arc(sx, sy, (i % 3) * 0.8 + 0.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        // Gold Dotted / Dashed Inner Frame
+        ctx.strokeStyle = "rgba(211, 193, 170, 0.5)";
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([4, 4]);
+        ctx.strokeRect(6, 6, width - 12, height - 12);
+        ctx.setLineDash([]);
+
+        // Subtle Gold Corner L-accents
+        ctx.strokeStyle = "rgba(232, 215, 184, 0.8)";
+        ctx.lineWidth = 1.8;
+        const cornerLen = 8;
+        // Top-Left
+        ctx.beginPath();
+        ctx.moveTo(6, 6 + cornerLen);
+        ctx.lineTo(6, 6);
+        ctx.lineTo(6 + cornerLen, 6);
+        ctx.stroke();
+        // Top-Right
+        ctx.beginPath();
+        ctx.moveTo(width - 6 - cornerLen, 6);
+        ctx.lineTo(width - 6, 6);
+        ctx.lineTo(width - 6, 6 + cornerLen);
+        ctx.stroke();
+        // Bottom-Left
+        ctx.beginPath();
+        ctx.moveTo(6, height - 6 - cornerLen);
+        ctx.lineTo(6, height - 6);
+        ctx.lineTo(6 + cornerLen, height - 6);
+        ctx.stroke();
+        // Bottom-Right
+        ctx.beginPath();
+        ctx.moveTo(width - 6 - cornerLen, height - 6);
+        ctx.lineTo(width - 6, height - 6);
+        ctx.lineTo(width - 6, height - 6 - cornerLen);
+        ctx.stroke();
+      } else {
+        // Solid cream/beige overlay
+        ctx.fillStyle = "#F6EEDD"; 
+        ctx.fillRect(0, 0, width, height);
+
+        // Gold dotted border around scratch area
+        ctx.strokeStyle = "rgba(184, 163, 105, 0.4)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.strokeRect(10, 10, width - 20, height - 20);
+        ctx.setLineDash([]);
+      }
     };
 
     // Initialize dimensions
@@ -54,7 +115,7 @@ export function useScratchCard(canvasRef, {
     return () => {
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [canvasRef]);
+  }, [canvasRef, theme]);
 
   const getCoordinates = (e) => {
     const canvas = canvasRef.current;
@@ -71,7 +132,6 @@ export function useScratchCard(canvasRef, {
       clientY = e.clientY;
     }
 
-    // Scale coordinates correctly if canvas drawing size is different from display size
     const x = (clientX - rect.left) * (canvas.width / rect.width);
     const y = (clientY - rect.top) * (canvas.height / rect.height);
     
@@ -127,7 +187,6 @@ export function useScratchCard(canvasRef, {
   };
 
   const handleStart = (e) => {
-    // Disable default behavior so mobile touches don't scroll
     if (e.cancelable) e.preventDefault();
     setIsDrawing(true);
     const { x, y } = getCoordinates(e);
